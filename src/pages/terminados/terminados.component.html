@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Lista de terminados</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h1>Terminados</h1><hr>
+    <ion-card *ngFor="let l of this._listaDeseosService.listas;let i = index">
+      <div *ngIf="l.terminada">
+        <ion-item (click)="verDetalle(l,i)">
+          <h2>{{l.nombre}}</h2>
+          <ion-note item-rigth>
+            {{l.items.length}} items
+          </ion-note>
+        </ion-item>
+        <ion-list>
+          <ion-item (click)="verDetalle(l,i)"
+          *ngFor="let its of l.items | slice:0:2">
+                <ion-icon *ngIf="!its.completado" ios="ios-square-outline" md="md-square-outline"></ion-icon>
+                <ion-icon *ngIf="its.completado" ios="ios-checkbox" md="md-checkbox"></ion-icon>
+                <h2 [class.tachado]="its.completado">
+                  {{its.nombre}}
+                </h2>
+            </ion-item>
+          <ion-item class="text-center" *ngIf="l.items.length > 2">
+            <ion-icon ios="ios-arrow-down" md="md-arrow-down"></ion-icon>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-card>
+    <ion-card *ngIf="hayListas()">
+      <ion-card-header>
+        No hay listas terminadas
+      </ion-card-header>
+      <ion-card-content>
+        Aqui se muestran las listas finalizadas
+      </ion-card-content>
+    </ion-card>
+
+
+    <ion-fab right bottom>
+    <button ion-fab color="light" (click)="irAgregar()">
+      <ion-icon ios="ios-add" md="md-add"></ion-icon>
+    </button>
+
+  </ion-fab>
+</ion-content>
